@@ -7,7 +7,7 @@
 #  and checking which interval [a, (a+b)/2] or [(a+b)/2, b] contains the root. This is a consequence
 #  of the Intermediate Value Theorem. The interval that contains the root is then 're-used' in the 
 #  above process repeatedly until the method produces a value that meets the precision required.
-#
+# Test
 
 from typing import Callable  # (For type hinting function)
 
