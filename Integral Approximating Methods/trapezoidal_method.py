@@ -50,15 +50,18 @@ def trapezoidal_vec(x: List[float], y: List[float]) -> float:
         y (List[float]): A list of the dependent variable values
 
     Raises:
-        ValueError: If there is a different number of independent variable values than dependent variable values
+        ValueError: If there is a different number of independent variable values than dependent variable values 
+        ValueError: If there is only one point
 
     Returns:
         float: The approximated value of the integral
     """
-    # Validating Inputs:
     # Validating inputs:
     if len(x) != len(y):
         raise ValueError("The number of points in each vector must be equal.")
+    
+    if len(x) < 2:
+        raise ValueError("Cannot integrate on less than two data points.")
     
     # Actual Method:
     n = len(x)
@@ -77,11 +80,11 @@ def trapezoidal_vec(x: List[float], y: List[float]) -> float:
 
 
 if __name__ == "__main__":
-    #def f(x): return x*x
-    #a,b = -5, 5
-    #n = 1000000
-    #print(trapezoidal(f,a,b,n))
-    #x = [5,4,3,2,1]
-    #y = [25, 16, 9, 4, 1]
-    #print(trapezoidal_vec(x,y))
+    def f(x): return x*x
+    a,b = -5, 5
+    n = 1000000
+    print(trapezoidal(f,a,b,n))
+    x = [5,4,3,2,1]
+    y = [25, 16, 9, 4, 1]
+    print(trapezoidal_vec(x,y))
     
