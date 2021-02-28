@@ -1,13 +1,11 @@
 # Author: Satya Jhaveri
 #
-# Simpson's One Third Rule works similarly to how the trapezoidal method works, in that
-#  it fits shapes to points on the function, however instead of fitting a trapezoid to
-#  two consecutive points, this method fits a parabola to three consecutive points.
-#  The parabola is then integrated over the domain of the points used to construct it
-#  and the total area from all parabolas are summed to obtain the approximation for the
-#  integral. 
+# Simpson's Three Eighths Rule is the exact same as Simpson's 1/3 rule, however instead
+#  of fitting a parabola to three points, a cubic polynomial is fitted to four 
+#  consecutive points. This reduces the amount of error even more.
+# 
 #  The value of each small integration can be found individually, or all can be found
-#  at once using the Composite Simpson's 1/3 Rule, which provides a formula for the
+#  at once using the Composite Simpson's 3/8 Rule, which provides a formula for the
 #  summation of all values at once, which is much more convenient.
 # 
 # This file also contains a version of this method that can be used on
@@ -17,9 +15,9 @@
 from typing import List, Callable
 
 
-def simpsons_13(f: Callable, a: float, b: float, n: int) -> float:
+def simpsons_38(f: Callable, a: float, b: float, n: int) -> float:
     """
-    Approximates the value of a definite integral using the Simpson's 1/3 rule and a specified number of points.
+    Approximates the value of a definite integral using the Simpson's 3/8 rule and a specified number of points.
 
     Args:
         f (Callable): A continuous function to integrate over
@@ -29,36 +27,39 @@ def simpsons_13(f: Callable, a: float, b: float, n: int) -> float:
 
     Raises:
         ValueError: If lower integral is higher than upper integral
-        ValueError: If the n is even 
-        ValueError: If n is less than three
+        ValueError: If the n is not congruent to four (mod 3)
+        ValueError: If n is less than four
 
     Returns:
         float: The approximated value of the integral
     """
     # Validating Inputs:
-    if n < 3:
+    if n < 4:
         raise ValueError("Cannot use less than 3 points.")
     
-    if n % 2 == 0:
-        raise ValueError("Cannot use an even number of points.")
+    if (n - 1) % 3 != 0:
+        raise ValueError("Cannot use a value of n that is not congruent to 4 (mod 3).")
     
     if a > b:
         raise ValueError("The lower bound of the integral cannot be more than the upper bound")
     
-    
-    # Actual method:
+    # Actual Method:
     width = (b - a) / (n - 1)
     x = [a + i*width for i in range(n)]  # linearly spaced vector of x values between a and b
     
-    odd_sum = 2* sum([f(i) for i in x[3:-3:2]])
-    even_sum = 4 * sum([f(i) for i in x[2:-2:2]])
-    integral = (width / 3) * (f(a) + odd_sum + even_sum + f(b))
+    # Evaluating the sums:
+    sum1 = 3 * sum([f(i) for i in x[1:-3:3]])
+    sum2 = 3 * sum([f(i) for i in x[2:-2:3]])
+    sum3 = 2 * sum([f(i) for i in x[3:-4:3]])
+    
+    # Summing the overall integral:
+    integral = (3 * width / 8) * (f(a) + sum1 + sum2 + sum3 + f(b))
     return integral
 
 
-def simpsons_13_vec(x: List[float], y: List[float]) -> float:
+def simpsons_38_vec(x: List[float], y: List[float]) -> float:
     """
-    Approximates the value of an integral using the Simpson's 1/3 method on discrete data.
+    Approximates the value of an integral using the Simpson's 3/8 method on discrete data.
 
     Args:
         x (List[float]): A list of the independent variable values
@@ -76,11 +77,11 @@ def simpsons_13_vec(x: List[float], y: List[float]) -> float:
     if len(x) != len(y):
         raise ValueError("The number of points in each vector must be equal.")
     
-    if len(x) < 3:
-        raise ValueError("Cannot integrate on less than two data points.")
+    if len(x) < 4:
+        raise ValueError("Cannot integrate on less than three data points.")
     
-    if len(x) % 2 == 0:
-        raise ValueError("Cannot integrate on an even number of points.")
+    if (len(x) - 1) % 3 != 0:
+        raise ValueError("Cannot integrate on a number of data points that is not congruent to 4 (mod 3).")
     
     # Actual Method:
     n = len(x)
@@ -90,30 +91,32 @@ def simpsons_13_vec(x: List[float], y: List[float]) -> float:
     x = [tuple_list[i][0] for i in range(n)]
     y = [tuple_list[i][1] for i in range(n)]
     
-    
-    odd_sum, even_sum = 0, 0
-    # Evaluating the even sums:
-    for i in range(1,n,2):
+    sum1, sum2, sum3 = 0, 0, 0
+    # Evaluating the sums:
+    for i in range(1, n - 2, 3):
         width = x[i] - x[i - 1]
-        even_sum += (width / 3) * 4 * y[i]
+        sum1 += (3 * width / 8) * 3 * y[i]
     
-    # Evaluating the odd sums:
-    for i in range(2, n - 1, 2):
+    for i in range(2, n - 1, 3):
         width = x[i] - x[i - 1]
-        odd_sum += (width / 3) * 2 * y[i]
+        sum2 += (3 * width / 8) * 3 * y[i]
     
-
-    # Evaluating the final integral:
-    integral = ((x[1] - x[0] / 3) * y[0]) + even_sum + odd_sum + ((x[-1] - x[-2]) / 3) * y[n - 1]
+    for i in range(3, n - 3, 3):
+        width = x[i] - x[i - 1]
+        sum3 += (3 * width / 8) * 2 * y[i]
+    
+    
+    # Summing overall integral:
+    integral = ((x[1] - x[0]) * 3 / 8) * y[0] + sum1 + sum2 + sum3 + ((x[- 1] - x[- 2]) * 3 / 8) * y[-1]
     return integral
 
 
 if __name__ == "__main__":
     def f(x): return x*x
     a,b = -5, 5
-    n = 10001
-    print(simpsons_13(f,a,b,n))
-
-    x = [5,4,3,2,1, 0, -1]
+    n = 103 + 30000
+    print(simpsons_38(f,a,b,n))
+    
+    x = [-1, 0, 1, 2, 3, 4, 5]
     y = [f(i) for i in x]
-    print(simpsons_13_vec(x,y))
+    print(simpsons_38_vec(x,y))
