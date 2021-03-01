@@ -77,14 +77,3 @@ def trapezoidal_vec(x: List[float], y: List[float]) -> float:
         width = x[i] - x[i - 1]
         acc += (width / 2) * (y[i-1]+y[i])
     return acc
-
-
-if __name__ == "__main__":
-    def f(x): return x*x
-    a,b = -5, 5
-    n = 1000000
-    print(trapezoidal(f,a,b,n))
-    x = [5,4,3,2,1]
-    y = [25, 16, 9, 4, 1]
-    print(trapezoidal_vec(x,y))
-    

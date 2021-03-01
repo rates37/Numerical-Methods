@@ -106,13 +106,3 @@ def simpsons_13_vec(x: List[float], y: List[float]) -> float:
     integral = ((x[1] - x[0]) / 3) * y[0] + even_sum + odd_sum + ((x[-1] - x[-2]) / 3) * y[-1]
     return integral
 
-
-if __name__ == "__main__":
-    def f(x): return x*x
-    a,b = -5, 5
-    n = 10001
-    print(simpsons_13(f,a,b,n))
-
-    x = [5,4,3,2,1, 0, -1]
-    y = [f(i) for i in x]
-    print(simpsons_13_vec(x,y))

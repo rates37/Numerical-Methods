@@ -109,14 +109,3 @@ def simpsons_38_vec(x: List[float], y: List[float]) -> float:
     # Summing overall integral:
     integral = ((x[1] - x[0]) * 3 / 8) * y[0] + sum1 + sum2 + sum3 + ((x[- 1] - x[- 2]) * 3 / 8) * y[-1]
     return integral
-
-
-if __name__ == "__main__":
-    def f(x): return x*x
-    a,b = -5, 5
-    n = 103 + 30000
-    print(simpsons_38(f,a,b,n))
-    
-    x = [-1, 0, 1, 2, 3, 4, 5]
-    y = [f(i) for i in x]
-    print(simpsons_38_vec(x,y))
