@@ -1,6 +1,7 @@
 # Author: Satya Jhaveri
 #
-# The rectangle method is the most basic method for integral approximation.
+# The rectangle method is the most basic method for integral approximation, and is 
+#  commonly used as examples examples in math textbooks.
 #
 # As the name suggests, this method uses rectangles to approximate the value of
 #  an integral. It creates rectangles that roughly fit the shape of the function

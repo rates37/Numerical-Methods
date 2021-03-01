@@ -77,7 +77,7 @@ def simpsons_13_vec(x: List[float], y: List[float]) -> float:
         raise ValueError("The number of points in each vector must be equal.")
     
     if len(x) < 3:
-        raise ValueError("Cannot integrate on less than two data points.")
+        raise ValueError("Cannot integrate on less than three data points.")
     
     if len(x) % 2 == 0:
         raise ValueError("Cannot integrate on an even number of points.")
@@ -93,18 +93,17 @@ def simpsons_13_vec(x: List[float], y: List[float]) -> float:
     
     odd_sum, even_sum = 0, 0
     # Evaluating the even sums:
-    for i in range(1,n,2):
-        width = x[i] - x[i - 1]
+    for i in range(1, n, 2):
+        width = abs(x[i] - x[i - 1])
         even_sum += (width / 3) * 4 * y[i]
     
     # Evaluating the odd sums:
     for i in range(2, n - 1, 2):
-        width = x[i] - x[i - 1]
+        width = abs(x[i] - x[i - 1])
         odd_sum += (width / 3) * 2 * y[i]
     
-
     # Evaluating the final integral:
-    integral = ((x[1] - x[0] / 3) * y[0]) + even_sum + odd_sum + ((x[-1] - x[-2]) / 3) * y[n - 1]
+    integral = ((x[1] - x[0]) / 3) * y[0] + even_sum + odd_sum + ((x[-1] - x[-2]) / 3) * y[-1]
     return integral
 
 
