@@ -1,6 +1,16 @@
 # Author: Satya Jhaveri
 #
-# The Euler method
+# The Forward Euler method is a numerical method for approximating the solutions
+#  to ordinary differential equations (ODEs), when given an initial value. It is the
+#  most basic method of solving ODEs. The method works by choosing a step size (the 
+#  smaller the step size, the more accurate the solution). Call this step size Δt.
+#  Let t_k be a sequence of t values between the initial and final value. We can say
+#  that t_(k+1) = t_k + Δt. The solution values can then be approximated in steps as:
+#  y_(k+1) = y_k + Δt * dy/dt(t_k, y_k).
+#
+# The forward euler method is an explicit method for approximating the solutions
+# to ODEs. Explicit methods calculate the value of the solution without solving
+#  algebraic equations.
 #
 # 
 #
