@@ -1,22 +1,13 @@
 # Author: Satya Jhaveri
 #
-# The Forward Euler method is a numerical method for approximating the solutions
-#  to ordinary differential equations (ODEs), when given an initial value. It is the
-#  most basic method of solving ODEs. The method works by choosing a step size (the 
-#  smaller the step size, the more accurate the solution). Call this step size Δt.
-#  Let t_k be a sequence of t values between the initial and final value. We can say
-#  that t_(k+1) = t_k + Δt. The solution values can then be approximated in steps as:
-#  y_(k+1) = y_k + Δt * dy/dt(t_k, y_k).
+# The Midpoint Method
 #
-# The forward euler method is an explicit method for approximating the solutions
-# to ODEs. Explicit methods calculate the value of the solution without solving
-#  algebraic equations.
 #
-# 
 #
 from typing import Callable, Tuple, List
 from math import floor
-def forward_euler(df: Callable, initial_x: float, final_x: float, initial_y: float, step: float) -> Tuple[List[float]]:
+
+def midpoint(df: Callable, initial_x: float, final_x: float, initial_y: float, step: float) -> Tuple[List[float]]:
     """
     Approximates the solution to an ordinary differential equation using Euler's method on the derivative of the original function
 
@@ -56,16 +47,17 @@ def forward_euler(df: Callable, initial_x: float, final_x: float, initial_y: flo
     # Applying method:
     for i in range(n - 1):
         h = x[i + 1] - x[i]
-        y[i + 1] = y[i] + df(x[i], y[i]) * h
+        yh = y[i] + (h / 2) * df(x[i], y[i])
+        xh = x[i] + h / 2
+        y[i + 1] = y[i] + h * df(xh, yh)
     
     return x, y
-    
-    
+
 if __name__ == "__main__":
     def f(x,y):
         return y
     
-    x, y = forward_euler(f, 0, 4, 1, 0.125)
+    x, y = midpoint(f, 0, 4, 1, 0.125)
     from matplotlib import pyplot as plt
     from math import exp
     plt.plot(x,y)
