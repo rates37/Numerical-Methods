@@ -1,15 +1,15 @@
 # Author: Satya Jhaveri
 #
-# The Midpoint Method
+# Heun's method
 #
 #
 #
 from typing import Callable, Tuple, List
 from math import floor
 
-def midpoint(df: Callable, initial_x: float, final_x: float, initial_y: float, step: float) -> Tuple[List[float]]:
+def heun(df: Callable, initial_x: float, final_x: float, initial_y: float, step: float) -> Tuple[List[float]]:
     """
-    Approximates the solution to an ordinary differential equation using the midpoint method on the derivative of the original function
+    Approximates the solution to an ordinary differential equation using Heun's method on the derivative of the original function
 
     Args:
         df (Callable):              A function of two variables (independent, dependent) that is the 'dy/dx'
@@ -47,9 +47,9 @@ def midpoint(df: Callable, initial_x: float, final_x: float, initial_y: float, s
     # Applying method:
     for i in range(n - 1):
         h = x[i + 1] - x[i]
-        yh = y[i] + (h / 2) * df(x[i], y[i])
-        xh = x[i] + h / 2
-        y[i + 1] = y[i] + h * df(xh, yh)
+        yg = y[i] + h * df(x[i], y[i])
+        avg_grad = 0.5 * (df(x[i],y[i]) + df(x[i + 1], yg))
+        y[i + 1] = y[i] + h * avg_grad
     
     return x, y
 
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     def f(x,y):
         return y
     
-    x, y = midpoint(f, 0, 4, 1, 0.125)
+    x, y = heun(f, 0, 4, 1, 0.125)
     from matplotlib import pyplot as plt
     from math import exp
     plt.plot(x,y)
