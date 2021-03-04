@@ -1,6 +1,10 @@
 # Author: Satya Jhaveri
 #
-# Heun's method
+# Heun's method aims to improve on Euler's method by finding the average slope, by taking the
+#  mean of the value of the slope at the beginning of the step and the value of the slope at
+#  the end of the step. This is called a predictor-corrector method, as we first predict the value
+#  at the end of the slope, and then make a corretion step to (hopefully) produce a more accurate 
+#  result.
 #
 #
 #
