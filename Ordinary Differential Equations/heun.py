@@ -66,3 +66,4 @@ if __name__ == "__main__":
     actual_y = [exp(i) for i in x]
     plt.plot(x,actual_y)
     plt.show()
+    
