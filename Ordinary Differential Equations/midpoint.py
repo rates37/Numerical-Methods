@@ -1,6 +1,10 @@
 # Author: Satya Jhaveri
 #
-# The Midpoint Method
+# The Midpoint Method aims to improve on Euler's method by using an estimate of the slope
+#  at the midpoint between the step. This is a predictor-corrector method, as it first estimates
+#  the value of the slope at the midpoint (predictor step), and then uses that value to approximate
+#  the value at the end of the step (corrector step) to increase the likelihood of a more accurate
+#  result. 
 #
 #
 #
