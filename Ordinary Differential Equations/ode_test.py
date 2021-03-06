@@ -4,6 +4,7 @@
 import unittest
 from math import exp
 from euler import forward_euler
+from heun import heun
 
 
 class TestODE(unittest.TestCase):
@@ -41,22 +42,61 @@ class TestODE(unittest.TestCase):
         try:
             self.assertRaises(ValueError, forward_euler, f, end_x, start_x, start_y, n)
         except AssertionError:
-            self.errorList.append("ValueError not raised when final x value is less than the initial x value")
+            self.errorList.append("ValueError not raised in forward Euler method when final x value is less than the initial x value")
         
         # Giving step value = 0:
         n = 0
         try:
             self.assertRaises(ValueError, forward_euler, f, start_x, end_x, start_y, n)
         except AssertionError:
-            self.errorList.append("ValueError not raised when step value = 0")
+            self.errorList.append("ValueError not raised in forward Euler method when step value = 0")
         
         # Giving step value < 0:
         n = -1
         try:
             self.assertRaises(ValueError, forward_euler, f, start_x, end_x, start_y, n)
         except AssertionError:
-            self.errorList.append("ValueError not raised when step value < 0")
+            self.errorList.append("ValueError not raised in forward Euler method when step value < 0")
+    
+    def testHeun(self) -> None:
+        def f(x,y):
+            return y
         
+        precision = 0.01
+        
+        
+        # Testing method:
+        start_x, end_x = 0,4
+        start_y = 1
+        n = 0.005
+        x, y = heun(f, start_x, end_x,start_y, n)
+        actual_value = exp(4)
+        
+        try:
+            self.assertLessEqual(y[-1] - actual_value, precision, msg="Heun's method not working accurately")
+        except AssertionError as e:
+            self.errorList.append(str(e))
+        
+        # Testing invalid inputs:
+        # When start x is higher than final x:
+        try:
+            self.assertRaises(ValueError, heun, f, end_x, start_x, start_y, n)
+        except AssertionError:
+            self.errorList.append("ValueError not raised in Heun's method when final x value is less than the initial x value")
+        
+        # Giving step value = 0:
+        n = 0
+        try:
+            self.assertRaises(ValueError, heun, f, start_x, end_x, start_y, n)
+        except AssertionError:
+            self.errorList.append("ValueError not raised in Heun's method when step value = 0")
+        
+        # Giving step value < 0:
+        n = -1
+        try:
+            self.assertRaises(ValueError, heun, f, start_x, end_x, start_y, n)
+        except AssertionError:
+            self.errorList.append("ValueError not raised in Heun's method when step value < 0")   
     
     
     
