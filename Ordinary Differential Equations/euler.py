@@ -46,7 +46,7 @@ def forward_euler(df: Callable, initial_x: float, final_x: float, initial_y: flo
     n = floor((final_x - initial_x) / step)
     width = (final_x - initial_x) / (n - 1)
     x = [initial_x + i*width for i in range(n)]  # linearly spaced vector of x values between initial and final x
-    print(n)
+    
     # Ensuring final_x is in the vector of x values:
     if final_x > x[n-1]:
         x.append(final_x)
@@ -65,7 +65,7 @@ if __name__ == "__main__":
     def f(x,y):
         return y
     
-    x, y = forward_euler(f, 0, 4, 1, 0.125)
+    x, y = forward_euler(f, 0, 4, 1, 0.005)
     from matplotlib import pyplot as plt
     from math import exp
     plt.plot(x,y)
