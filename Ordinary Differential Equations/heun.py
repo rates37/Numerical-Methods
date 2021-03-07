@@ -5,7 +5,10 @@
 #  the end of the step. This is called a predictor-corrector method, as we first predict the value
 #  at the end of the slope, and then make a corretion step to (hopefully) produce a more accurate 
 #  result.
+# 
+# Predictor Step: y_g = y_i + f(t_i, y_i)
 #
+# Corrector Step: y_(i+1) = y_i + 0.5 * h * (f(t_i, y_i) + f(t_(i+1), y_g))
 #
 from typing import Callable, Tuple, List
 from math import floor

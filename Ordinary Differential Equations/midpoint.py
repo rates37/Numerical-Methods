@@ -5,6 +5,9 @@
 #  the value of the slope at the midpoint (predictor step), and then uses that value to approximate
 #  the value at the end of the step (corrector step) to increase the likelihood of a more accurate
 #  result. 
+# 
+# Predictor Step: 
+# Corrector Step: 
 #
 #
 from typing import Callable, Tuple, List
