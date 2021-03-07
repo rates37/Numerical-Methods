@@ -12,7 +12,6 @@
 # to ODEs. Explicit methods calculate the value of the solution without solving
 #  algebraic equations.
 #
-# 
 #
 from typing import Callable, Tuple, List
 from math import floor
@@ -59,8 +58,8 @@ def forward_euler(df: Callable, initial_x: float, final_x: float, initial_y: flo
         y[i + 1] = y[i] + df(x[i], y[i]) * h
     
     return x, y
-    
-    
+
+
 if __name__ == "__main__":
     def f(x,y):
         return y

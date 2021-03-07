@@ -7,7 +7,6 @@
 #  result. 
 #
 #
-#
 from typing import Callable, Tuple, List
 from math import floor
 
