@@ -6,8 +6,9 @@
 #  the value at the end of the step (corrector step) to increase the likelihood of a more accurate
 #  result. 
 # 
-# Predictor Step: 
-# Corrector Step: 
+# Predictor Step: y_(i + 0.5) = y_i + 0.5 * h * f(t_i, y_i)
+#
+# Corrector Step: y_(i+1) = y_i + h * (f(t_(i + 0.5), y_(i + 0.5)))
 #
 #
 from typing import Callable, Tuple, List
