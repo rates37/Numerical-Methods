@@ -61,6 +61,8 @@ def forward_euler(df: Callable, initial_x: float, final_x: float, initial_y: flo
 
 
 if __name__ == "__main__":
+    # Plotting real vs approximated solution:
+    
     def f(x,y):
         return y
     
